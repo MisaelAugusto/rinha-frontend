@@ -1,0 +1,31 @@
+:root {
+  --blue: #1e90ff;
+  --green: #4e9590;
+  --pink: #f2cab8;
+  --grey: #bfbfbf;
+  --black: #000000;
+}
+
+.errorMessage p {
+  display: 'none';
+}
+
+.key {
+  color: var(--green);
+}
+
+.string {
+  color: var(--black);
+}
+
+.number, .boolean {
+  color: var(--blue);
+}
+
+.brackets {
+  color:  var(--pink);
+}
+
+.indentation {
+  margin-left: 1rem;
+}
