@@ -4,6 +4,7 @@
 // STYLE JSON CONTAINER
 // STYLE PROPS HIERARCHY
 // IMPLEMENT PAGINATIO
+// ACCESSIBILITY
 
 const HEADER_OBJECT_ELEMENT = document.createElement('header');
 HEADER_OBJECT_ELEMENT.textContent = '{';
@@ -37,6 +38,7 @@ const getChildProps = (prop, parentElement) => {
   Object.entries(prop).forEach(([key, value]) => {
     const childPropKeyElement = document.createElement('p');
     childPropKeyElement.textContent = `${key}: `;
+    childPropKeyElement.tabIndex = '0';
 
     if (typeof value === 'object') {
       renderProp(key, value, parentElement);
@@ -58,18 +60,29 @@ const renderProp = (key, value, parentElement) => {
 
   const propertyHeader = document.createElement('header');
   propertyHeader.textContent = `${key}: `;
+  propertyHeader.tabIndex = '0';
 
   propertyDiv.appendChild(propertyHeader);
 
   if (typeof value === 'object') {
-    propertyHeader.textContent += '{';
+    const isArray = Array.isArray(value);
 
+    const openBracket = isArray ? '[' : '{';
+    propertyHeader.textContent += openBracket;
+    
     const childPropsElement = getChildProps(value, propertyDiv);
     
     propertyDiv.appendChild(childPropsElement);
-
+    
+    const closeBracket = isArray ? ']' : '}';
     const footerElement = FOOTER_OBJECT_ELEMENT.cloneNode(true);
+    footerElement.textContent = closeBracket;
+
     propertyDiv.appendChild(footerElement);
+  } else {
+    const childPropValueElement = getValueElement(value);
+      
+    propertyHeader.appendChild(childPropValueElement);
   }
 
   parentElement.appendChild(propertyDiv);
